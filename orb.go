@@ -4,7 +4,6 @@ import (
 	"image"
 	"strings"
 
-	//"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
@@ -40,7 +39,7 @@ func createElementBar() elementBar {
 
 func (e *elementBar) addOrb(key ebiten.Key) {
 	if e.size == 0 {
-		e.sheet, _, _ = ebitenutil.NewImageFromFile("orb.png")
+		e.sheet, _, _ = ebitenutil.NewImageFromFile("assets/orb.png")
 	}
 
 	var sb strings.Builder
@@ -73,10 +72,10 @@ func (e *elementBar) renderElemBar(screen *ebiten.Image) {
 
 	bracketY := player.pos.y + 5
 	optionsBracket1 := &ebiten.DrawImageOptions{}
-	leftBracketX := player.pos.x - 5 - 10*e.size
+	leftBracketX := player.pos.x - 5 - 10*e.size - 2 //-2 to separate bracket some
 	optionsBracket1.GeoM.Translate(float64(leftBracketX), float64(bracketY))
 	optionsBracket2 := &ebiten.DrawImageOptions{}
-	optionsBracket2.GeoM.Translate(float64(player.pos.x+5+10*e.size), float64(bracketY))
+	optionsBracket2.GeoM.Translate(float64(player.pos.x+5+10*e.size+2), float64(bracketY)) //+2 to separate brackets some
 
 	optionsOrb := &ebiten.DrawImageOptions{} //to be modified and used for each of the orbs
 	optionsOrb.GeoM.Translate(float64(leftBracketX+10), float64(bracketY))

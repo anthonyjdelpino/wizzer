@@ -33,10 +33,6 @@ type Player struct {
 }
 
 func createPlayer(sht *ebiten.Image, position Vec2i) Player {
-	//spellList := spellTree{}
-	//fireNode := spellNode{isRoot: false, value: Fire}
-	//testSpell.root.addChild(spellNode{isRoot: false, value: Fire})
-	//testSpell.root.addChild(spellNode{value: Water})
 	return Player{
 		sheet: sht,
 		sprite: Sprite{
@@ -67,20 +63,19 @@ func (p *Player) update() { //UPDATE THE PLAYER'S 2 SPELL TREES HERE
 	if inpututil.IsKeyJustPressed(ebiten.KeyQ) { //!!!!!!!!!!!!!!clean this up, just one call of addChild, otherwise order so most commonly used keys go first
 		p.elemBar.addOrb(ebiten.KeyQ)
 		p.currentOrb = Fire
-
+		orbBoard.orbHit = 'F'
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyW) {
 		p.elemBar.addOrb(ebiten.KeyW)
 		p.currentOrb = Water
-
+		orbBoard.orbHit = 'W'
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyE) {
 		p.elemBar.addOrb(ebiten.KeyE)
 		p.currentOrb = Earth
-
-		fmt.Printf("orbs: %d\n", p.elemBar.size)
+		orbBoard.orbHit = 'E'
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyR) {
 		p.elemBar.addOrb(ebiten.KeyR)
 		p.currentOrb = Lightning
-
+		orbBoard.orbHit = 'L'
 	} else if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		//activate spell, or fizzle
 		fmt.Printf("cur bar: " + p.elemBar.orbs + "\n")
@@ -93,10 +88,9 @@ func (p *Player) update() { //UPDATE THE PLAYER'S 2 SPELL TREES HERE
 			}
 		}
 
-		p.elemBar.orbs = "" //empty string
+		p.elemBar.orbs = ""
 		p.elemBar.size = 0
 		p.currentOrb = '0'
-		//p.elemBar.orbs = ""
 	}
 	p.heading = Vec2i{p.dest.x - p.pos.x, p.dest.y - p.pos.y}
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight) {
