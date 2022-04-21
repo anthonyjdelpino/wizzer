@@ -59,17 +59,17 @@ func /*(g *Game)*/ init() {
 			mposx, mposy := ebiten.CursorPosition()
 			heading := Vec2i{mposx - player.pos.x, mposy - player.pos.y}
 
-			//deciding spriteDirection of sprite
+			//deciding animDirection of sprite
 			if math.Abs(float64(heading.x)) > math.Abs(float64(heading.y)) { //means either l
 				if heading.x > 0 { //facing right
-					player.spriteDir = 3
+					player.animDir = 3
 				} else {
-					player.spriteDir = 2 // facing left
+					player.animDir = 2 // facing left
 				}
 			} else if heading.y < 0 { //facing up -- REMEMBER LOW Y IS TOP OF SCREEN!!!!!
-				player.spriteDir = 1
+				player.animDir = 1
 			} else {
-				player.spriteDir = 0 // facing down
+				player.animDir = 0 // facing down
 			}
 			headingMag := math.Sqrt(float64(heading.x*heading.x + heading.y*heading.y))
 
@@ -78,8 +78,22 @@ func /*(g *Game)*/ init() {
 				heading.y = int(float64(heading.y) * (teleportDist / headingMag)) //	-type as float then int due to rounding to 0
 			}
 
-			player.sprite.ptA = newVec2i(player.spriteDir*40, 0)
-			player.sprite.ptB = newVec2i((player.spriteDir*40)+40, 80)
+			// player.sprite.ptA = newVec2i(player.animDir*40, 0)
+			// player.sprite.ptB = newVec2i((player.animDir*40)+40, 80)
+			switch player.animDir { //0 down, 1 up, 2 left, 3 right
+			case 0:
+				player.curAnimation = player.allAnimations.downAnimation
+				player.curSpritesheet = player.allSheets.downSpriteSheet
+			case 1:
+				player.curAnimation = player.allAnimations.upAnimation
+				player.curSpritesheet = player.allSheets.upSpriteSheet
+			case 2:
+				player.curAnimation = player.allAnimations.leftAnimation
+				player.curSpritesheet = player.allSheets.leftSpriteSheet
+			case 3:
+				player.curAnimation = player.allAnimations.rightAnimation
+				player.curSpritesheet = player.allSheets.rightSpriteSheet
+			}
 			player.pos.x += heading.x
 			player.pos.y += heading.y
 			player.dest = player.pos

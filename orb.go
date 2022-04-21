@@ -72,11 +72,12 @@ func (e *elementBar) renderElemBar(screen *ebiten.Image) {
 
 	bracketY := player.pos.y + 5
 	optionsBracket1 := &ebiten.DrawImageOptions{}
-	leftBracketX := player.pos.x - 5 - 10*e.size - 2 //-2 to separate bracket some
+	leftBracketX := player.pos.x - 10 - 10*e.size - 2 //-2 to separate bracket some
+	//leftBracketX := player.pos.x - 5 - 10*e.size - 2 //-2 to separate bracket some
 	optionsBracket1.GeoM.Translate(float64(leftBracketX), float64(bracketY))
 	optionsBracket2 := &ebiten.DrawImageOptions{}
-	optionsBracket2.GeoM.Translate(float64(player.pos.x+5+10*e.size+2), float64(bracketY)) //+2 to separate brackets some
-
+	//optionsBracket2.GeoM.Translate(float64(player.pos.x+5+10*e.size+2), float64(bracketY)) //+2 to separate brackets some
+	optionsBracket2.GeoM.Translate(float64(player.pos.x+10*e.size+2), float64(bracketY))
 	optionsOrb := &ebiten.DrawImageOptions{} //to be modified and used for each of the orbs
 	optionsOrb.GeoM.Translate(float64(leftBracketX+10), float64(bracketY))
 
